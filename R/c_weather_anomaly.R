@@ -8,8 +8,7 @@
 #' and minimum temperature (°C).
 #' @param year_start Start year to begin the statical analysis.
 #' @param year_end End year to finish the statical analysis.
-#' @param month_start Start month to begin the statical analysis.
-#' @param month_end End month to finish the statical analysis.
+#' @param months Vector with the month to take into account.
 #' @param day_start Start day to begin the statical analysis.
 #' @param day_end End day to finish the statical analysis.
 #' @param years A vector with a selection of years with potential anomaly.
@@ -29,8 +28,7 @@
 #' output <- c_weather_anomaly(data = weather_blue_grass_airport,
 #'                             year_start = 1990,
 #'                             year_end = 2019,
-#'                             month_start = 5,
-#'                             month_end = 9,
+#'                             months = c(9,10,11,12,1,2,3),
 #'                             day_start = 1,
 #'                             day_end = 31,
 #'                             years = c(2020,2021,2022,2023),
@@ -38,8 +36,7 @@
 c_weather_anomaly <- function(data,
                               year_start,
                               year_end,
-                              month_start,
-                              month_end,
+                              months,
                               day_start,
                               day_end,
                               years,
@@ -54,8 +51,7 @@ c_weather_anomaly <- function(data,
            T_air_avg = (T_air_max + T_air_min)/2) %>%
     filter(year >= {{year_start}},
            year < {{year_end}},
-           month >= {{month_start}},
-           month < {{month_end}},
+           month %in% {{months}},
            day >= {{day_start}},
            day < {{day_end}}) %>%
     group_by(year) %>%
@@ -77,8 +73,7 @@ c_weather_anomaly <- function(data,
   plot <-
     ggplot(data = data %>%
              filter(year %in% {{years}},
-                    month >= {{month_start}},
-                    month < {{month_end}},
+                    month %in% {{months}},
                     day >= {{day_start}},
                     day < {{day_end}}) %>%
              group_by(year) %>%
@@ -93,17 +88,18 @@ c_weather_anomaly <- function(data,
     theme_bw() +
     xlab("Rain: ratio to the mean (%)") +
     ylab("Mean temperature: difference with the mean (°C)") +
+    labs(color = "Year") +
     labs(caption = glue::glue({{source}},
                               ". ",
                               "Mean are calculated from ",
-                              {{month_start}},
+                              {{months[1]}},
                               "/",
                               {{day_start}},
                               "/",
                               {{year_start}},
                               "/",
                               " to ",
-                              {{month_end}},
+                              {{months[length(months)]}},
                               "/",
                               {{day_end}},
                               "/",
