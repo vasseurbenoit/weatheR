@@ -127,9 +127,9 @@ c_ombrothermic_diagram <- function(data,
     theme(legend.position = "bottom") +
     labs(caption = glue::glue({{source}},
                               ". Average from ",
-                              min(data$year),
+                              {{year_start}},
                               " to ",
-                              max(data$year)
+                              {{year_end}}
     ))
 
 
