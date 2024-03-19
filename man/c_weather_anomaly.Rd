@@ -8,8 +8,7 @@ c_weather_anomaly(
   data,
   year_start,
   year_end,
-  month_start,
-  month_end,
+  months,
   day_start,
   day_end,
   years,
@@ -26,9 +25,7 @@ and minimum temperature (°C).}
 
 \item{year_end}{End year to finish the statical analysis.}
 
-\item{month_start}{Start month to begin the statical analysis.}
-
-\item{month_end}{End month to finish the statical analysis.}
+\item{months}{Vector with the month to take into account.}
 
 \item{day_start}{Start day to begin the statical analysis.}
 
@@ -54,8 +51,7 @@ analysis.
 output <- c_weather_anomaly(data = weather_blue_grass_airport,
                             year_start = 1990,
                             year_end = 2019,
-                            month_start = 5,
-                            month_end = 9,
+                            months = c(9,10,11,12,1,2,3),
                             day_start = 1,
                             day_end = 31,
                             years = c(2020,2021,2022,2023),
