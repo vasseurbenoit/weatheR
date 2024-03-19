@@ -16,6 +16,7 @@
 #' Selected years must be out of the range of years selected between `year_start`
 #' and `year_end`.
 #' @param source Source of the data.
+#' @param plot_type 1 rain in ratio to mean, 2 rain in absolute value
 #'
 #' @return List with `table` and `diagram`. The table is used to build the
 #' ombrothermic plot.
@@ -43,7 +44,8 @@ c_weather_anomaly <- function(data,
                               day_start,
                               day_end,
                               years,
-                              source){
+                              source,
+                              plot_type = 1){
 
   # Processing ----
   table <-
@@ -75,40 +77,81 @@ c_weather_anomaly <- function(data,
 
   # Ploting ----
   plot <-
-    ggplot(data = data %>%
-             filter(year %in% {{years}},
-                    month >= {{month_start}},
-                    month < {{month_end}},
-                    day >= {{day_start}},
-                    day < {{day_end}}) %>%
-             group_by(year) %>%
-             summarise(rain = sum(rain),
-                       T_air_avg = mean(T_air_avg)) %>%
-             mutate(year = as.character(year)),
-           aes(x = (rain/ table$rain) * 100,
-               y = T_air_avg - table$T_air_avg)) +
-    geom_point(aes(color = year)) +
-    geom_vline(aes(xintercept = 100)) +
-    geom_hline(aes(yintercept = 0)) +
-    theme_bw() +
-    xlab("Rain: ratio to the mean (%)") +
-    ylab("Mean temperature: difference with the mean (°C)") +
-    labs(caption = glue::glue({{source}},
-                              ". ",
-                              "Mean are calculated from ",
-                              {{month_start}},
-                              "/",
-                              {{day_start}},
-                              "/",
-                              {{year_start}},
-                              "/",
-                              " to ",
-                              {{month_end}},
-                              "/",
-                              {{day_end}},
-                              "/",
-                              {{year_end}}
-                              ))
+    if(plot_type == 1){
+
+      ggplot(data = data %>%
+               filter(year %in% {{years}},
+                      month >= {{month_start}},
+                      month < {{month_end}},
+                      day >= {{day_start}},
+                      day < {{day_end}}) %>%
+               group_by(year) %>%
+               summarise(rain = sum(rain),
+                         T_air_avg = mean(T_air_avg)) %>%
+               mutate(year = as.character(year)),
+             aes(x = (rain/ table$rain) * 100,
+                 y = T_air_avg - table$T_air_avg)) +
+        geom_point(aes(color = year)) +
+        geom_vline(aes(xintercept = 100)) +
+        geom_hline(aes(yintercept = 0)) +
+        theme_bw() +
+        xlab("Ratio to the historical mean of precipitation (%)") +
+        ylab("Temperature difference from the historical mean (°C)") +
+        labs(caption = glue::glue({{source}},
+                                  ". ",
+                                  "Historical mean are calculated from ",
+                                  {{month_start}},
+                                  "/",
+                                  {{day_start}},
+                                  "/",
+                                  {{year_start}},
+                                  "/",
+                                  " to ",
+                                  {{month_end}},
+                                  "/",
+                                  {{day_end}},
+                                  "/",
+                                  {{year_end}}
+        ))
+
+    } else {
+
+      ggplot(data = data %>%
+               filter(year %in% {{years}},
+                      month >= {{month_start}},
+                      month < {{month_end}},
+                      day >= {{day_start}},
+                      day < {{day_end}}) %>%
+               group_by(year) %>%
+               summarise(rain = sum(rain),
+                         T_air_avg = mean(T_air_avg)) %>%
+               mutate(year = as.character(year)),
+             aes(x = rain - table$rain,
+                 y = T_air_avg - table$T_air_avg)) +
+        geom_point(aes(color = year)) +
+        geom_vline(aes(xintercept = 100)) +
+        geom_hline(aes(yintercept = 0)) +
+        theme_bw() +
+        xlab("Precipitation difference from the historical mean (mm)") +
+        ylab("Temperature difference from the historical mean (°C)") +
+        labs(caption = glue::glue({{source}},
+                                  ". ",
+                                  "Historical mean are calculated from ",
+                                  {{month_start}},
+                                  "/",
+                                  {{day_start}},
+                                  "/",
+                                  {{year_start}},
+                                  "/",
+                                  " to ",
+                                  {{month_end}},
+                                  "/",
+                                  {{day_end}},
+                                  "/",
+                                  {{year_end}}
+        ))
+
+    }
 
 
   # Output ----

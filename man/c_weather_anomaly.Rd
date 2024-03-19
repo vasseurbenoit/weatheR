@@ -13,7 +13,8 @@ c_weather_anomaly(
   day_start,
   day_end,
   years,
-  source
+  source,
+  plot_type = 1
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ Selected years must be out of the range of years selected between \code{year_sta
 and \code{year_end}.}
 
 \item{source}{Source of the data.}
+
+\item{plot_type}{1 rain in ratio to mean, 2 rain in absolute value}
 }
 \value{
 List with \code{table} and \code{diagram}. The table is used to build the
