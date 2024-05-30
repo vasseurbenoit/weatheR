@@ -3,6 +3,7 @@
 export("%>%")
 export(c_ombrothermic_diagram)
 export(c_weather_anomaly)
+export(t_daily_thermal_unit)
 export(t_fahrenheit_celcius)
 import(ggplot2)
 import(lubridate)
