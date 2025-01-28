@@ -9,7 +9,7 @@ output: html_document
 ## Only ONE run
 usethis::use_pkgdown() 
 ## Copy/Paste in the console to build the site
-pkgdown::build_site(override = list(destination = "inst/site"),
+pkgdown::build_site(override = list(destination = "docs/"),
                     examples = TRUE,
                     lazy = TRUE) 
 
