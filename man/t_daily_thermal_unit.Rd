@@ -2,7 +2,7 @@
 % Please edit documentation in R/t_daily_thermal_unit.R
 \name{t_daily_thermal_unit}
 \alias{t_daily_thermal_unit}
-\title{w_daily_thermal_unit}
+\title{t_daily_thermal_unit}
 \usage{
 t_daily_thermal_unit(
   T_air_min,

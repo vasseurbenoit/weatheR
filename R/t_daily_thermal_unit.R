@@ -1,4 +1,4 @@
-#' w_daily_thermal_unit
+#' t_daily_thermal_unit
 #'
 #' @description Calculation of the daily thermal unit.
 #' Two methods are available.

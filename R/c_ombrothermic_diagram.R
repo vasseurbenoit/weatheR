@@ -1,6 +1,6 @@
 #' c_ombrothermic_diagram
 #'
-#' @description Plot a ombrothermic diagram for a set of weather data.
+#' @description Plot ombrothermic diagram for a set of weather data.
 #' @description On the y scale, one temperature unit equals two rain unit. To
 #' be correct, 30 years must be selected for the statistical analysis.
 #'

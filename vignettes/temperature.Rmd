@@ -1,11 +1,13 @@
 ---
 title: "Temperature"
 output: rmarkdown::html_vignette
-bibliography: '`r system.file("references.bib", package="weatherR")`'
+bibliography: '`r system.file("references.bib", package="weatheR")`'
 vignette: >
   %\VignetteIndexEntry{Temperature}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -13,6 +15,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
   dpi = 600,
   fig.width = 6,
   fig.height = 5,
@@ -33,13 +37,12 @@ Growing degree day can be calculate in several ways @mcmaster_growing_1997:
 
 - Equation 1
 $$GDD = \frac{(T_{max} + T_{min})}{2} - T_{base}$$
-- Method 1: if $(T_{max} + T_{min})/2 < T_{base}$ then the right part is equal 
-to $T_{base}$\. According to @mcmaster_growing_1997, this method is 
-widespread in modeling.\
-- Method 2: if $T_{max} < T_{base}$ then $T_{max} = T_{base}$ and if 
-$T_{min} < T_{base}$ then $T_{min} = T_{base}$.This method is used for corn
-(@mcmaster_growing_1997).\
-
+  - Method 1: if $(T_{max} + T_{min})/2 < T_{base}$ then the right part is equal 
+  to $T_{base}$\. According to @mcmaster_growing_1997, this method is 
+  widespread in modeling.\
+  - Method 2: if $T_{max} < T_{base}$ then $T_{max} = T_{base}$ and if 
+  $T_{min} < T_{base}$ then $T_{min} = T_{base}$.This method is used for corn
+  (@mcmaster_growing_1997).\
 
 
 - Equation 2 @pessotto_determining_2023
@@ -49,40 +52,42 @@ $$0, ~T_{avg} <=  T_{base} ~or~ T_{avg} >= T_{max} \\ \frac{T_{avg} - T_{base}}{
 - Equation 3, a non linear model, @yin_nonlinear_1995
 
 ```{r weather-degree-days-eq1-method-1}
-ggplot(data = cover_crop_cardinal_temperatures %>% 
+ggplot(data = 
+         cover_crop_cardinal_temperatures %>% 
          expand_grid(T_air_min = seq(-50,50,0.05)) %>% 
-         mutate(T_air_max = T_air_min + 20,
-                method = 2,
-                T_air_avg = (T_air_min + T_air_max)/2,
-                dtu_linear_method_1 = cumsum(
-                  pmap_dbl(list(T_air_min,
-                                T_air_max,
-                                T_base),
-                           t_daily_thermal_unit)
-                ),
-                dtu_linear_method_2 = cumsum(
-                  pmap_dbl(list(T_air_min,
-                                T_air_max,
-                                T_base,
-                                method),
-                           t_daily_thermal_unit)
-                )) %>%
-         filter(cover_crop %in% c("cereal_rye",
-                                  "crimson_clover",
-                                  "hairy_vetch")) %>% 
+         mutate(
+           T_air_max = T_air_min + 20,
+           T_air_avg = (T_air_min + T_air_max)/ 2,
+           method = 2,
+           dtu_linear_method_1 = 
+             pmap_dbl(list(T_air_min,
+                           T_air_max,
+                           T_base),
+                      t_daily_thermal_unit),
+           dtu_linear_method_2 = 
+             pmap_dbl(list(T_air_min,
+                           T_air_max,
+                           T_base,
+                           method),
+                      t_daily_thermal_unit),
+           cover_crop = str_replace_all(string = cover_crop,
+                                        pattern = "cereal_rye",
+                                        replacement = "Cereal rye")
+         ) %>%
+         filter(cover_crop %in% c("Cereal rye")) %>% 
          pivot_longer(cols = c("dtu_linear_method_1",
                                "dtu_linear_method_2"),
                       names_to = "variable",
                       values_to = "value")) +
   geom_point(aes(x = T_air_avg,
                  y = value,
-                 color = variable,
-                 shape = cover_crop),
+                 color = variable),
              position = position_jitterdodge(jitter.width = 0.25)) +
   theme_bw() +
+  facet_grid(.~cover_crop) +
   coord_cartesian(xlim = c(-10,50),
                   ylim = c(0,50)) +
-  labs(color = "Cover crop") +
+  labs(color = "Daily thermal unit method") +
   xlab("Average air temperature (C)") +
   ylab("Daily thermal unit (Cj)") +
   scale_color_aaas()
@@ -99,7 +104,9 @@ ggplot(data = cover_crop_cardinal_temperatures %>%
          filter(cover_crop %in% c("cereal_rye",
                                   "crimson_clover",
                                   "hairy_vetch"))) +
-  geom_point(aes(x = T_air_avg, y = GDD_triangle, color = cover_crop)) +
+  geom_point(aes(x = T_air_avg,
+                 y = GDD_triangle,
+                 color = cover_crop)) +
   theme_bw() +
   coord_cartesian(xlim = c(-10,50),
                   ylim = c(0,1)) +

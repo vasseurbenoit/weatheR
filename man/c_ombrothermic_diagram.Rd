@@ -22,7 +22,7 @@ List with \code{table} and \code{diagram}. The table is used to build the
 ombrothermic plot.
 }
 \description{
-Plot a ombrothermic diagram for a set of weather data.
+Plot ombrothermic diagram for a set of weather data.
 
 On the y scale, one temperature unit equals two rain unit. To
 be correct, 30 years must be selected for the statistical analysis.
