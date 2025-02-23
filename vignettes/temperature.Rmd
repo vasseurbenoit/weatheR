@@ -6,11 +6,13 @@ vignette: >
   %\VignetteIndexEntry{Temperature}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
+library(weatheR)
+library(tidyverse)
+library(ggsci)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -25,11 +27,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(weatheR)
-library(tidyverse)
-library(ggsci)
-```
 
 # Growing degree-days
 
@@ -37,81 +34,147 @@ Growing degree day can be calculate in several ways @mcmaster_growing_1997:
 
 - Equation 1
 $$GDD = \frac{(T_{max} + T_{min})}{2} - T_{base}$$
-  - Method 1: if $(T_{max} + T_{min})/2 < T_{base}$ then the right part is equal 
-  to $T_{base}$\. According to @mcmaster_growing_1997, this method is 
-  widespread in modeling.\
-  - Method 2: if $T_{max} < T_{base}$ then $T_{max} = T_{base}$ and if 
-  $T_{min} < T_{base}$ then $T_{min} = T_{base}$.This method is used for corn
-  (@mcmaster_growing_1997).\
+- Method 1: if $(T_{max} + T_{min})/2 < T_{base}$ then the right part is equal 
+to $T_{base}$\. According to @mcmaster_growing_1997, this method is 
+widespread in modeling.\
+- Method 2: if $T_{max} < T_{base}$ then $T_{max} = T_{base}$ and if 
+$T_{min} < T_{base}$ then $T_{min} = T_{base}$.This method is used for corn
+(@mcmaster_growing_1997).\
 
 
 - Equation 2 @pessotto_determining_2023
 
 $$0, ~T_{avg} <=  T_{base} ~or~ T_{avg} >= T_{max} \\ \frac{T_{avg} - T_{base}}{T_{opt} - T_{base}}, T_{base} <= T_{avg} <= T_{opt} \\ 1-\frac{T_{avg} - T_{opt}}{T_{max} - T_{opt}}, T_{opt} <= T_{avg} <= T_{max}$$
 
-- Equation 3, a non linear model, @yin_nonlinear_1995
+- 
 
-```{r weather-degree-days-eq1-method-1}
-ggplot(data = 
-         cover_crop_cardinal_temperatures %>% 
-         expand_grid(T_air_min = seq(-50,50,0.05)) %>% 
-         mutate(
-           T_air_max = T_air_min + 20,
-           T_air_avg = (T_air_min + T_air_max)/ 2,
-           method = 2,
-           dtu_linear_method_1 = 
-             pmap_dbl(list(T_air_min,
-                           T_air_max,
-                           T_base),
-                      t_daily_thermal_unit),
-           dtu_linear_method_2 = 
-             pmap_dbl(list(T_air_min,
-                           T_air_max,
-                           T_base,
-                           method),
-                      t_daily_thermal_unit),
-           cover_crop = str_replace_all(string = cover_crop,
-                                        pattern = "cereal_rye",
-                                        replacement = "Cereal rye")
-         ) %>%
-         filter(cover_crop %in% c("Cereal rye")) %>% 
-         pivot_longer(cols = c("dtu_linear_method_1",
-                               "dtu_linear_method_2"),
-                      names_to = "variable",
-                      values_to = "value")) +
-  geom_point(aes(x = T_air_avg,
-                 y = value,
-                 color = variable),
-             position = position_jitterdodge(jitter.width = 0.25)) +
+
+
+
+
+```{r rate-of-development}
+# Cardinal temperatures
+T_base <- 5
+T_opt <- 15
+T_opt_1 <- 10
+T_opt_2 <- 20
+T_max <- 25
+
+# Calculation
+rate_of_development <- 
+  tibble(.rows = 31) %>% 
+  mutate(
+    T_air_avg = seq(0, 30, 1),
+    # Method A
+    method_a =
+      t_daily_thermal_unit(
+        T_air_avg = T_air_avg,
+        T_base = T_base,
+        method = "A"
+      )[["rate_of_development"]],
+    # Method C
+    method_c =
+      t_daily_thermal_unit(
+        T_air_avg = T_air_avg,
+        T_base = T_base,
+        T_opt = T_opt,
+        T_max = T_max,
+        method = "C"
+      )[["rate_of_development"]],
+    # Method D
+    method_d = 
+      t_daily_thermal_unit(
+        T_air_avg = T_air_avg,
+        T_base = T_base,
+        T_opt_1 = T_opt_1,
+        T_opt_2 = T_opt_2,
+        T_max = T_max,
+        method = "D"
+      )[["rate_of_development"]]
+  ) %>% 
+  pivot_longer(cols = c(#"method_a",
+    #"method_c",
+    "method_d"),
+    names_to = "variable",
+    values_to = "value")
+
+# Plot
+ggplot(rate_of_development,
+       aes(x = T_air_avg,
+           y = value,
+           color = variable)) +
+  geom_point() +
   theme_bw() +
-  facet_grid(.~cover_crop) +
-  coord_cartesian(xlim = c(-10,50),
-                  ylim = c(0,50)) +
-  labs(color = "Daily thermal unit method") +
-  xlab("Average air temperature (C)") +
-  ylab("Daily thermal unit (Cj)") +
-  scale_color_aaas()
+  xlab("Average air temperature (°C)") +
+  ylab("Rate of development (1/d)") +
+  labs(color = "Rate of \ndevelopment \nmethod")
 ```
 
-```{r weather-degree-days-eq2-triangle}
-ggplot(data = cover_crop_cardinal_temperatures %>% 
-         expand_grid(T_air_avg = seq(-10,50,0.05)) %>% 
-         mutate(GDD_triangle = pmap_dbl(list(T_air_avg,
-                                             T_base,
-                                             T_opt,
-                                             T_max),
-                                        t_daily_thermal_unit)) %>% 
-         filter(cover_crop %in% c("cereal_rye",
-                                  "crimson_clover",
-                                  "hairy_vetch"))) +
-  geom_point(aes(x = T_air_avg,
-                 y = GDD_triangle,
-                 color = cover_crop)) +
+
+```{r growing-degree-days}
+# Cardinal temperatures
+T_base <- 5
+T_opt <- 15
+T_opt_1 <- 10
+T_opt_2 <- 20
+T_max <- 25
+
+# Calculation
+growing_degree_days <- 
+  weather_blue_grass_airport %>% 
+  filter(date > "2022-10-01",
+         date < "2023-04-20") %>% 
+  mutate(
+    T_air_avg = (T_air_max + T_air_min)/2,
+    # Method A
+    method_a =
+      cumsum(
+        t_daily_thermal_unit(
+          T_air_avg = T_air_avg,
+          T_base = T_base,
+          method = "A"
+        )[["growing_degree_days"]]
+      ),
+    # Method C
+    method_c =
+      cumsum(
+        t_daily_thermal_unit(
+          T_air_avg = T_air_avg,
+          T_base = T_base,
+          T_opt = T_opt,
+          T_max = T_max,
+          method = "C"
+        )[["growing_degree_days"]]
+      ),
+    # Method D
+    method_d = 
+      cumsum(
+        t_daily_thermal_unit(
+          T_air_avg = T_air_avg,
+          T_base = T_base,
+          T_opt_1 = T_opt_1,
+          T_opt_2 = T_opt_2,
+          T_max = T_max,
+          method = "D"
+        )[["growing_degree_days"]]
+      )
+  ) %>% 
+  pivot_longer(cols = c("method_a",
+                        "method_c",
+                        "method_d"),
+               names_to = "variable",
+               values_to = "value")
+
+# Plot
+ggplot(growing_degree_days,
+       aes(x = date,
+           y = value,
+           color = variable)) +
+  geom_point() +
   theme_bw() +
-  coord_cartesian(xlim = c(-10,50),
-                  ylim = c(0,1)) +
-  labs(color = "Cover crop") +
-  xlab("Average air temperature (C)") +
-  ylab("Relative development") +
-  scale_color_aaas()
+  xlab("Average air temperature (°C)") +
+  ylab("Growing degree days (°C/d)") +
+  labs(color = "Growing degree/n days")
 ```
+
+

@@ -5,26 +5,35 @@
 \title{t_daily_thermal_unit}
 \usage{
 t_daily_thermal_unit(
-  T_air_min,
-  T_air_max,
+  T_air_avg,
   T_base,
   T_opt = NA,
+  T_opt_1 = NA,
+  T_opt_2 = NA,
   T_max = NA,
-  method = 1
+  method = "A"
 )
 }
 \arguments{
-\item{T_air_min}{Minimum air temperature (°C)}
-
-\item{T_air_max}{Maximum air temperature (°C)}
+\item{T_air_avg}{Average air temperature (°C)}
 
 \item{T_base}{Base air temperature of a crop (°C)}
 
 \item{T_opt}{Optimum air temperature of a crop (°C)}
 
+\item{T_opt_1}{First optimum temperature of a crop (°C)}
+
+\item{T_opt_2}{Second optimum temperature of a crop (°C)}
+
 \item{T_max}{Maximum air temperature of a crop (°C)}
 
-\item{method}{Selection of method 1 or 2. NOT the third one.}
+\item{method}{Selection of the calculation method:
+\itemize{
+\item Method A: Linear - small grains
+\item Method B: Linear - corn
+\item Method C: Triangle
+\item Method D: Trapezoidal
+}}
 }
 \value{
 Daily thermal unit (°Cj)
@@ -33,30 +42,40 @@ Daily thermal unit (°Cj)
 Calculation of the daily thermal unit.
 Two methods are available.
 \itemize{
-\item Method 1: use of T_min, T_max and T_base. Method widely used for
-the calculation of the daily thermal unit of small grain cereals.
-\item Method 1: use of T_min, T_max and T_base. Method widely used for
-the calculation of the daily thermal unit of corn.
-\item Method 2: use of T_min, T_max, T_base, T_opt and T_max
+\item Method A - linear - small grains: use of T_base.
+Method widely used for the calculation of the daily thermal unit of small
+grain cereals.
+\item Method B - linear: use of T_air_min, T_air_max and T_base. Method
+widely used for the calculation of the daily thermal unit of corn.
+\item Method C - triangle: use of T_air_min, T_air_max, T_base, T_opt and
+T_max.
+\item Method D - trapezoid: use of T_air_min, T_air_max, T_base, T_opt_1,
+T_opt_2 and T_max.
 }
 }
 \examples{
-# Method 1
-t_daily_thermal_unit(T_air_min = 5,
-                     T_air_max = 8,
-                     T_base = 10,
-                     method = 1)
+# Method A - linear - small grains
+t_daily_thermal_unit(T_air_avg = 15,
+                     T_base = 5,
+                     method = "A")
 
-# Method 2
-t_daily_thermal_unit(T_air_min = 5,
-                     T_air_max = 8,
-                     T_base = 10,
-                     method = 2)
+# Method B - linear - corn
+t_daily_thermal_unit(T_air_avg = 15,
+                     T_base = 5,
+                     method = "B")
 
-# Method 3
-t_daily_thermal_unit(T_air_min = 5,
-                     T_air_max = 8,
-                     T_base = 10,
+# Method C - triangle
+t_daily_thermal_unit(T_air_avg = 15,
+                     T_base = 5,
                      T_opt = 10,
-                     T_max = 20)
+                     T_max = 20,
+                     method = "C")
+
+# Method D - trapezoidal
+t_daily_thermal_unit(T_air_avg = 15,
+                     T_base = 5,
+                     T_opt_1 = 12,
+                     T_opt_2 = 18,
+                     T_max = 20,
+                     method = "D")
 }
