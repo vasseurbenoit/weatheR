@@ -131,7 +131,7 @@ t_growing_degree_days <- function(T_air_avg,
 
         } else {
 
-          message("Incorrect daily thermal unit method sepcified.")
+          stop("Incorrect daily thermal unit method sepcified.")
 
         }
 

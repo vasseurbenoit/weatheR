@@ -23,8 +23,8 @@
 #'
 #' @examples
 #' output <- c_ombrothermic_diagram(data = weather_blue_grass_airport,
-#'                                  year_start = 1990,
-#'                                  year_end = 2019,
+#'                                  year_start = 1991,
+#'                                  year_end = 2020,
 #'                                  source = "Blue Grass Airport (Lexington)")
 c_ombrothermic_diagram <- function(data,
                                    year_start,
@@ -124,6 +124,11 @@ c_ombrothermic_diagram <- function(data,
     scale_color_manual(values = c("red", "black", "blue", "darkgrey")) +
     labs(color = "") +
     theme_bw() +
+    theme(text = element_text(size = 14),
+          axis.title =  element_text(face = "bold"),
+          legend.title = element_text(face = "bold"),
+          legend.position = "right",
+          legend.box = "vertical") +
     theme(legend.position = "bottom") +
     labs(caption = glue::glue({{source}},
                               ". Average from ",
