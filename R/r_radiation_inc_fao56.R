@@ -17,12 +17,23 @@
 #' @source Irrigation and drainage paper, Allen & all (1998)
 #'
 #' @examples
+#' # Without correction
 #' r_radiation_inc_fao56(longitude = 10,
 #'                       latitude = 35,
 #'                       altitude = 30,
 #'                       date = "2022-11-04",
 #'                       T_air_min = 5,
 #'                       T_air_max = 15)
+#'
+#' # With correction
+#' r_radiation_inc_fao56(longitude = 10,
+#'                       latitude = 35,
+#'                       altitude = 30,
+#'                       date = "2022-11-04",
+#'                       T_air_min = 5,
+#'                       T_air_max = 15,
+#'                       a = 1.2,
+#'                       b = 2)
 r_radiation_inc_fao56 <- function(longitude,
                                   latitude,
                                   altitude,

@@ -46,10 +46,21 @@ Rayonnement net (MJ/m^2)
 Calcul du rayonnement incident net
 }
 \examples{
+# Without correction
 r_radiation_inc_fao56(longitude = 10,
                       latitude = 35,
                       altitude = 30,
                       date = "2022-11-04",
                       T_air_min = 5,
                       T_air_max = 15)
+
+# With correction
+r_radiation_inc_fao56(longitude = 10,
+                      latitude = 35,
+                      altitude = 30,
+                      date = "2022-11-04",
+                      T_air_min = 5,
+                      T_air_max = 15,
+                      a = 1.2,
+                      b = 2)
 }

@@ -3,6 +3,7 @@
 export("%>%")
 export(c_ombrothermic_diagram)
 export(c_weather_anomaly)
+export(e_evapotranspiration_fao56)
 export(r_radiation_inc_fao56)
 export(t_fahrenheit_celcius)
 export(t_growing_degree_days)
