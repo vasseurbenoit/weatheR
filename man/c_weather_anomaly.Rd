@@ -21,7 +21,7 @@ c_weather_anomaly(
 \code{T_air_min} respectively the date of the day, the rain (mm) and the maximum
 and minimum temperature (°C).}
 
-\item{year_start}{Start year to begin the statical analysis.}
+\item{year_start}{Starting year to begin the statical analysis.}
 
 \item{year_end}{End year to finish the statical analysis.}
 
@@ -40,8 +40,10 @@ and \code{year_end}.}
 \item{plot_type}{1 rain in ratio to mean, 2 rain in absolute value}
 }
 \value{
-List with \code{table} and \code{diagram}. The table is used to build the
-ombrothermic plot.
+List with \code{data_thirthy_years_avg}, \code{data_selected_years} and
+\code{plot_selected_years}, the df with the thirthy years average temperature and
+rainfall, the df with the average temperature and rainfall of the selected
+years and the plot of the selected years.
 }
 \description{
 To be correct, 30 years must be selected for the statistical

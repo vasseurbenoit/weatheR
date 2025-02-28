@@ -20,8 +20,9 @@ test_that("class of outputs", {
                               source = "Blue Grass Airport (Lexington)")
 
   ## Test
-  expect_true(is.data.frame(output[["table"]]))
-  expect_true("ggplot" %in% class(output[["plot"]]))
+  expect_true(is.data.frame(output[["data_thirthy_years_avg"]]))
+  expect_true(is.data.frame(output[["data_selected_years"]]))
+  expect_true("ggplot" %in% class(output[["plot_selected_years"]]))
 
 
   # Plot type 2 ----
@@ -45,7 +46,8 @@ test_that("class of outputs", {
                               plot_type = 2)
 
   ## Test
-  expect_true(is.data.frame(output[["table"]]))
-  expect_true("ggplot" %in% class(output[["plot"]]))
+  expect_true(is.data.frame(output[["data_thirthy_years_avg"]]))
+  expect_true(is.data.frame(output[["data_selected_years"]]))
+  expect_true("ggplot" %in% class(output[["plot_selected_years"]]))
 
 })
