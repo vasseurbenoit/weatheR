@@ -4,7 +4,8 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Benoit", "Vasseur", , "vasseur.benoit62890@protonmail.com", role = c("aut", "cre"))
 Description: 
-    Calculation of growing degree-days.  Comparison of weather to climate. 
+    Calculation of growing degree-days.  Comparison of weather to
+    climate.
 License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)

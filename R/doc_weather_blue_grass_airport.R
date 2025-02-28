@@ -2,7 +2,7 @@
 #'
 #' Observations of the blue grass airport weather station.
 #'
-#' @format A data frame with 45290 rows and 9 variables:
+#' @format A data frame with 45656 rows and 9 variables:
 #' \describe{
 #'   \item{ date }{  Date }
 #'   \item{ rain }{  numeric }

@@ -29,7 +29,7 @@ be correct, 30 years must be selected for the statistical analysis.
 }
 \examples{
 output <- c_ombrothermic_diagram(data = weather_blue_grass_airport,
-                                 year_start = 1990,
-                                 year_end = 2019,
+                                 year_start = 1991,
+                                 year_end = 2020,
                                  source = "Blue Grass Airport (Lexington)")
 }

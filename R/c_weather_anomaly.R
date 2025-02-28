@@ -101,6 +101,11 @@ c_weather_anomaly <- function(data,
       geom_vline(aes(xintercept = 100)) +
       geom_hline(aes(yintercept = 0)) +
       theme_bw() +
+      theme(text = element_text(size = 14),
+            axis.title =  element_text(face = "bold"),
+            legend.title = element_text(face = "bold"),
+            legend.position = "right",
+            legend.box = "vertical") +
       xlab("Ratio of the precipitation to the historical mean (%)") +
       ylab("Temperature difference from the historical mean (°C)") +
       labs(color = "Year") +

@@ -5,5 +5,7 @@ parameters <- list("inch_to_mm" = 2.54 * 10,
 
 # Saving ----
 usethis::use_data(parameters,
-                  overwrite = TRUE,
-                  internal = TRUE)
+                  overwrite = TRUE)
+checkhelper::use_data_doc(name = "parameters",
+                          description = "List of parameters used in the package.")
+attachment::att_amend_desc()
