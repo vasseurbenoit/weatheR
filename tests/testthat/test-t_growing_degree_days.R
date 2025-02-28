@@ -1,4 +1,4 @@
-test_that("Checking class of the output", {
+test_that("Checking the class of the output", {
 
   # Method A - linear - small grains
   output_a <- t_growing_degree_days(T_air_avg = 15,
@@ -57,4 +57,18 @@ test_that("Checking class of the output", {
         "growing_degree_days") %in% names(output_d)
     )
   )
+
+})
+
+test_that("The function returns a message when the selected method is not available", {
+
+  expect_error(
+    t_growing_degree_days(T_air_avg = 15,
+                          T_base = 5,
+                          T_opt_1 = 12,
+                          T_opt_2 = 18,
+                          T_max = 20,
+                          method = "Z")
+  )
+
 })
