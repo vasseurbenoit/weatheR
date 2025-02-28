@@ -17,6 +17,7 @@ Imports:
     magrittr,
     tidyr
 Suggests: 
+    bookdown,
     ggsci,
     knitr,
     rmarkdown,
