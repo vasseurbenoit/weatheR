@@ -106,11 +106,11 @@ c_weather_anomaly <- function(data,
             legend.title = element_text(face = "bold"),
             legend.position = "right",
             legend.box = "vertical") +
-      xlab("Ratio of the precipitation to the historical mean (%)") +
-      ylab("Temperature difference from the historical mean (°C)") +
+      xlab("Ratio of the precipitation to\nthe historical mean (%)") +
+      ylab("Temperature difference\nfrom the historical mean (°C)") +
       labs(color = "Year") +
       labs(caption = glue::glue({{source}},
-                                ". ",
+                                ".\n",
                                 "Historical mean are calculated from ",
                                 {{months[1]}},
                                 "/",
