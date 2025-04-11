@@ -5,35 +5,40 @@ library(weatheR)
 # data ----
 weather_blue_grass_airport <- read.csv(
   file = system.file(
-    "extdata",
-    "weather_data_blue_grass_airport.csv",
+    "weatherdata",
+    "lexington_blue_grass_airport_weather_data_1991_2024.csv",
     package = "weatheR"
   )
 ) %>%
+  rename("date" = "DATE",
+         "rain" = "PRCP",
+         "snow" = "SNOW",
+         "T_air_max" = "TMAX",
+         "T_air_min" = "TMIN") %>%
   mutate(date = as.Date(date,
-                        format = "%m/%d/%Y"),
+                        format = "%Y-%m-%d"),
          rain = as.numeric(rain),
          snow = as.numeric(snow),
          T_air_max = as.numeric(T_air_max),
          T_air_min = as.numeric(T_air_min)) %>%
-  mutate_all(~replace(., is.na(.), 0)) %>% #FLAG.
   mutate(
-    T_air_min = t_fahrenheit_celcius(T_air_fahrenheit = T_air_min),
-    T_air_max = t_fahrenheit_celcius(T_air_fahrenheit = T_air_max),
-    T_air_avg = (T_air_min + T_air_max)/2,
-    snow = snow * weatheR::parameters[["inch_to_mm"]],
-    rain = rain * weatheR::parameters[["inch_to_mm"]],
     year = year(date),
     month = month(date),
     day = day(date),
+    T_air_avg = (T_air_min + T_air_max)/2,
+    snow_into_rain_mm = snow * weatheR::parameters[["mm_of_snow_to_mm_of_rain_usa"]],
+    rain = rain + snow_into_rain_mm,
     across(c("T_air_min",
              "T_air_max",
              "T_air_avg"),
            ~ round(x = .,
                    digits = 1))
-  )
-
-
+  ) %>%
+  select(date,
+         rain,
+         snow,
+         T_air_max,
+         T_air_min)
 
 # Saving ----
 usethis::use_data(weather_blue_grass_airport,
