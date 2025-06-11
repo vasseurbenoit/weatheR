@@ -16,18 +16,59 @@ knitr::opts_chunk$set(
 # weatheR
 
 <!-- badges: start -->
+
+
+
 <!-- badges: end -->
 
 The goal of weatheR is to provide functions that help analyzing and visualizing
-weather and climatic data. Included functionnalities are:
+weather and climatic data.
 
-- Calculation of growing degree-days.  
-- Comparison of weather to climate. 
+- `c` functions are for climate.
+- `e` functions are for ETP.
+- `r` functions are for radiation.
+- `t` functions are for temperature.
+- `z` functions are tools.
 
 ## Installation
 
-
+``` r
+# install.packages("devtools")
+devtools::install_github("vasseurbenoit/weatheR")
+```
 
 ## Example
 
+This is a basic example which shows you how to solve a common problem:
 
+```{r example}
+library(weatheR)
+
+# Climate
+c_ombrothermic_diagram(data = weather_blue_grass_airport,
+                                 year_start = 1991,
+                                 year_end = 2020,
+                                 source = "Blue Grass Airport (Lexington)")
+
+# ETP
+e_evapotranspiration_fao56(altitude = 30,
+                           R_inc = 5,
+                           T_air_moy = 20,
+                           T_air_min = 10,
+                           T_air_max = 30)
+
+# Radiation
+r_radiation_inc_fao56(longitude = 10,
+                      latitude = 35,
+                      altitude = 30,
+                      date = "2022-11-04",
+                      T_air_min = 5,
+                      T_air_max = 15)
+
+# Temperature
+t_growing_degree_days(T_air_avg = 15,
+                      T_base = 5,
+                      T_opt = 10,
+                      T_max = 20,
+                      method = "C")
+```
