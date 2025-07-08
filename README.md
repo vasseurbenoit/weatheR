@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# weatheR
+# weatheR <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -59,7 +59,7 @@ c_ombrothermic_diagram(data = weather_blue_grass_airport,
 #> (`geom_col()`).
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="README_files/figure-gfm/example-1.png" width="70%" />
 
 ``` r
 

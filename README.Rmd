@@ -8,12 +8,11 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "70%"
 )
 ```
 
-# weatheR
+# weatheR <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 <!-- badges: start -->
 
