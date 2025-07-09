@@ -5,7 +5,7 @@ articles:
   climate: climate.html
   evapotranspiration: evapotranspiration.html
   temperature: temperature.html
-last_built: 2025-07-09T20:44Z
+last_built: 2025-07-09T20:50Z
 urls:
   reference: https://vasseurbenoit.github.io/weatheR/reference
   article: https://vasseurbenoit.github.io/weatheR/articles
