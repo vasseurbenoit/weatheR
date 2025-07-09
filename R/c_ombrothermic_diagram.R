@@ -17,7 +17,6 @@
 #' @import ggplot2
 #' @import lubridate
 #' @importFrom dplyr mutate summarise across group_by filter rename
-#' @importFrom forcats fct_relevel
 #' @importFrom tidyr pivot_longer
 #' @importFrom stringi stri_c
 #' @importFrom stringr str_replace_all
