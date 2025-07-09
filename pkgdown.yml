@@ -1,0 +1,11 @@
+pandoc: 3.1.11
+pkgdown: 2.1.3
+pkgdown_sha: ~
+articles:
+  climate: climate.html
+  evapotranspiration: evapotranspiration.html
+  temperature: temperature.html
+last_built: 2025-07-09T20:47Z
+urls:
+  reference: https://vasseurbenoit.github.io/weatheR/reference
+  article: https://vasseurbenoit.github.io/weatheR/articles
