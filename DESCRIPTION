@@ -4,7 +4,7 @@ Version: 0.1.0
 Authors@R: 
     person("Benoit", "Vasseur", , "vasseur.benoit62890@protonmail.com", role = c("aut", "cre"))
 Description: Aggregation of functions related to weather data processing.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 URL: https://github.com/vasseurbenoit/weatheR,
     https://vasseurbenoit.github.io/weatheR/
 BugReports: https://github.com/vasseurbenoit/weatheR/issues
