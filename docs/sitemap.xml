@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/404.html</loc>
   </url>
   <url>
-    <loc>/articles/climate.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/articles/climate.html</loc>
   </url>
   <url>
-    <loc>/articles/evapotranspiration.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/articles/evapotranspiration.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/temperature.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/articles/temperature.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/index.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/reference/cover_crop_cardinal_temperatures.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/cover_crop_cardinal_temperatures.html</loc>
   </url>
   <url>
-    <loc>/reference/c_ombrothermic_diagram.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/c_ombrothermic_diagram.html</loc>
   </url>
   <url>
-    <loc>/reference/c_weather_anomaly.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/c_weather_anomaly.html</loc>
   </url>
   <url>
-    <loc>/reference/e_evapotranspiration_fao56.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/e_evapotranspiration_fao56.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/parameters.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/r_radiation_inc_fao56.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/r_radiation_inc_fao56.html</loc>
   </url>
   <url>
-    <loc>/reference/t_fahrenheit_celcius.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/t_fahrenheit_celcius.html</loc>
   </url>
   <url>
-    <loc>/reference/t_growing_degree_days.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/t_growing_degree_days.html</loc>
   </url>
   <url>
-    <loc>/reference/weather_blue_grass_airport.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/weather_blue_grass_airport.html</loc>
   </url>
   <url>
-    <loc>/reference/z_angle_conversion.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/z_angle_conversion.html</loc>
   </url>
   <url>
-    <loc>/reference/z_pression_atm.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/z_pression_atm.html</loc>
   </url>
   <url>
-    <loc>/reference/z_pression_vapeur_saturante.html</loc>
+    <loc>https://vasseurbenoit.github.io/weatheR/reference/z_pression_vapeur_saturante.html</loc>
   </url>
 </urlset>

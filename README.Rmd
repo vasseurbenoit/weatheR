@@ -18,9 +18,9 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![CRAN status](https://www.r-pkg.org/badges/version/weatheR)](https://CRAN.R-project.org/package=weatheR)
 [![R-CMD-check](https://github.com/vasseurbenoit/weatheR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/vasseurbenoit/weatheR/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/vasseurbenoit/weatheR/branch/dev/graph/badge.svg)](https://app.codecov.io/gh/vasseurbenoit/weatheR?branch=dev)
+[![Codecov test coverage](https://codecov.io/gh/vasseurbenoit/weatheR/branch/main/graph/badge.svg)](https://app.codecov.io/gh/vasseurbenoit/weatheR?branch=main)
+
 <!-- badges: end -->
 
 The goal of weatheR is to provide functions that help analyzing and visualizing

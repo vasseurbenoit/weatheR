@@ -1,12 +1,7 @@
 test_that("class of outputs", {
 
   # Data ----
-  data <- data.frame(date = seq(as.Date("1990-01-01"),
-                                as.Date("2019-12-01"),
-                                1),
-                     rain = 100,
-                     T_air_max = 10,
-                     T_air_min = 0)
+  data <- weather_blue_grass_airport
 
   # Example ----
   output <- c_ombrothermic_diagram(data = data,
