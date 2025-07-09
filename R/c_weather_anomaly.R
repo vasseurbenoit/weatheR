@@ -5,7 +5,7 @@
 #'
 #' @param data Dataframe with the columns `date`, `rain`, `T_air_max` and
 #' `T_air_min` respectively the date of the day, the rain (mm) and the maximum
-#' and minimum temperature (°C).
+#' and minimum temperature (`r stringi::stri_c("\u00b0")`C).
 #' @param year_start Starting year to begin the statical analysis.
 #' @param year_end End year to finish the statical analysis.
 #' @param months Vector with the month to take into account.
@@ -107,7 +107,7 @@ c_weather_anomaly <- function(data,
             legend.position = "right",
             legend.box = "vertical") +
       xlab("Ratio of the precipitation to\nthe historical mean (%)") +
-      ylab("Temperature difference\nfrom the historical mean (°C)") +
+      ylab(stri_c("Temperature difference\nfrom the historical mean (\u00b0C)")) +
       labs(color = "Year") +
       labs(caption = glue::glue({{source}},
                                 ".\n",
@@ -154,7 +154,7 @@ c_weather_anomaly <- function(data,
       geom_hline(aes(yintercept = 0)) +
       theme_bw() +
       xlab("Precipitation difference from the historical mean (mm)") +
-      ylab("Temperature difference from the historical mean (°C)") +
+      ylab(stri_c("Temperature difference from the historical mean (\u00b0C)")) +
       labs(color = "Year") +
       labs(caption = glue::glue({{source}},
                                 ". ",

@@ -6,7 +6,7 @@
 #'
 #' @param data Dataframe with the columns `date`, `rain`, `T_air_max` and
 #' `T_air_min` respectively the date of the day, the rain (mm) and the maximum
-#' and minimum temperature (°C).
+#' and minimum temperature (`r stringi::stri_c("\u00b0")`C).
 #' @param year_start Start year to begin the statical analysis.
 #' @param year_end End year to finish the statical analysis.
 #' @param source Source of the data.
@@ -19,6 +19,8 @@
 #' @importFrom dplyr mutate summarise across group_by filter rename
 #' @importFrom forcats fct_relevel
 #' @importFrom tidyr pivot_longer
+#' @importFrom stringi stri_c
+#' @importFrom stringr str_replace_all
 #' @export
 #'
 #' @examples
@@ -65,51 +67,68 @@ c_ombrothermic_diagram <- function(data,
                     "freezing_day"),
                   ~ round(x = .,
                           digits = 1))) %>%
-    rename("Average air\ntemperature (°C)" = "T_air_avg",
-           "Minimum air\ntemperature (°C)" = "T_air_min",
-           "Maximum air\ntemperature (°C)" = "T_air_max",
-           "Number of\nfreezing day" = "freezing_day") %>%
-    pivot_longer(cols = c("Average air\ntemperature (°C)",
-                          "Minimum air\ntemperature (°C)",
-                          "Maximum air\ntemperature (°C)",
-                          "Number of\nfreezing day"),
+    pivot_longer(cols = c("T_air_avg",
+                          "T_air_min",
+                          "T_air_max",
+                          "freezing_day"),
                  names_to = "variable",
-                 values_to = "value")
-
+                 values_to = "value") %>%
+    mutate(
+      variable = str_replace_all(
+        string = variable,
+        pattern = "T_air_avg",
+        replacement = stri_c("Average air\ntemperature (\u00b0C)")
+      ),
+      variable = str_replace_all(
+        string = variable,
+        pattern = "T_air_min",
+        replacement = stri_c("Minimum air\ntemperature (\u00b0C)")
+      ),
+      variable = str_replace_all(
+        string = variable,
+        pattern = "T_air_max",
+        replacement = stri_c("Maximum air\ntemperature (\u00b0C)")
+      ),
+      variable = str_replace_all(
+        string = variable,
+        pattern = "freezing_day",
+        replacement = "Number of\nfreezing day"
+      )
+    )
 
   # Ploting ----
   diagram <-
     ggplot(
       data = table %>%
-        mutate(month = fct_relevel(month,
-                                   c("Oct",
-                                     "Nov",
-                                     "Dec",
-                                     "Jan",
-                                     "Feb",
-                                     "Mar",
-                                     "Apr",
-                                     "May",
-                                     "Jun",
-                                     "Jul",
-                                     "Aug",
-                                     "Sep")),
-               variable = fct_relevel(variable,
-                                      c("Maximum air\ntemperature (°C)",
-                                        "Average air\ntemperature (°C)",
-                                        "Minimum air\ntemperature (°C)",
-                                        "Number of\nfreezing day")))
+        mutate(month = factor(month,
+                              c("Oct",
+                                "Nov",
+                                "Dec",
+                                "Jan",
+                                "Feb",
+                                "Mar",
+                                "Apr",
+                                "May",
+                                "Jun",
+                                "Jul",
+                                "Aug",
+                                "Sep")),
+               variable = factor(variable,
+                                 c(stri_c("Maximum air\ntemperature (\u00b0C)"),
+                                   stri_c("Average air\ntemperature (\u00b0C)"),
+                                   stri_c("Minimum air\ntemperature (\u00b0C)"),
+                                   "Number of\nfreezing day")))
     ) +
     geom_col(aes(x = month, y = rain), fill = "lightblue") +
     geom_point(aes(x = month,
                    y = value *
-                     parameters[["y_scale_ombrothermic_diagram"]],
+                     weatheR::parameters[["y_scale_ombrothermic_diagram"]],
                    color = variable),
                size = 3) +
     geom_line(aes(x = month,
-                   y = value *
-                    parameters[["y_scale_ombrothermic_diagram"]],
-                   group = variable,
+                  y = value *
+                    weatheR::parameters[["y_scale_ombrothermic_diagram"]],
+                  group = variable,
                   color = variable)) +
     labs(x = "Month",
          y = "Monthly average precipitation (mm)") +
@@ -120,7 +139,8 @@ c_ombrothermic_diagram <- function(data,
                (min(table$value) + 5)),
         (max(table$rain) + 10)),
       sec.axis = sec_axis(trans = ~.*(1/parameters[["y_scale_ombrothermic_diagram"]]),
-                          name = "Monthly average air temperature (°C)")) +
+                          name = stri_c("Monthly average air temperature (\u00b0C)"))
+    ) +
     scale_color_manual(values = c("red", "black", "blue", "darkgrey")) +
     labs(color = "") +
     theme_bw() +
