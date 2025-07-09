@@ -1,6 +1,6 @@
 Package: weatheR
-Title: weatheR
-Version: 0.0.0.9000
+Title: Weather and climate analysis
+Version: 0.1.0
 Authors@R: 
     person("Benoit", "Vasseur", , "vasseur.benoit62890@protonmail.com", role = c("aut", "cre"))
 Description: Aggregation of functions related to weather data processing.
