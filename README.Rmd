@@ -8,9 +8,9 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "70%",
+  out.width = "80%",
   fig.align = "center",
-  warnings = FALSE
+  fig.path = "man/figures/"
 )
 ```
 
@@ -43,7 +43,7 @@ devtools::install_github("vasseurbenoit/weatheR")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, fig.cap="Ombrothermic diagram of Lexington Blue Grass Airport.", warning=FALSE}
 # Library
 library(weatheR)
 

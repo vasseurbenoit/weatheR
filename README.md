@@ -41,10 +41,6 @@ c_ombrothermic_diagram(data = weather_blue_grass_airport,
                        year_start = 1991,
                        year_end = 2020,
                        source = "Blue Grass Airport (Lexington)")
-#> Warning: There was 1 warning in `mutate()`.
-#> ℹ In argument: `month = fct_relevel(...)`.
-#> Caused by warning:
-#> ! 1 unknown level in `f`: Sep
 #> $table
 #> # A tibble: 48 × 4
 #>    month  rain variable                        value
@@ -62,11 +58,16 @@ c_ombrothermic_diagram(data = weather_blue_grass_airport,
 #> # ℹ 38 more rows
 #> 
 #> $diagram
-#> Warning: Removed 36 rows containing missing values or values outside the scale range
-#> (`geom_col()`).
 ```
 
-<img src="README_files/figure-gfm/example-1.png" width="70%" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+
+<img src="man/figures/example-1.png" alt="Ombrothermic diagram of Lexington Blue Grass Airport." width="80%" />
+<p class="caption">
+Ombrothermic diagram of Lexington Blue Grass Airport.
+</p>
+
+</div>
 
 ``` r
 

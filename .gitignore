@@ -2,8 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-docs
 inst/extdata/*
 inst/weatherdata/*
-inst/doc
 inst/logo/*
+docs
