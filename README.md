@@ -4,6 +4,10 @@
 # weatheR <img src="man/figures/logo.png" align="right" height="120" alt="" />
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/weatheR)](https://CRAN.R-project.org/package=weatheR)
+[![R-CMD-check](https://github.com/vasseurbenoit/weatheR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/vasseurbenoit/weatheR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of weatheR is to provide functions that help analyzing and
@@ -27,13 +31,14 @@ devtools::install_github("vasseurbenoit/weatheR")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
+# Library
 library(weatheR)
 
 # Climate
 c_ombrothermic_diagram(data = weather_blue_grass_airport,
-                                 year_start = 1991,
-                                 year_end = 2020,
-                                 source = "Blue Grass Airport (Lexington)")
+                       year_start = 1991,
+                       year_end = 2020,
+                       source = "Blue Grass Airport (Lexington)")
 #> Warning: There was 1 warning in `mutate()`.
 #> ℹ In argument: `month = fct_relevel(...)`.
 #> Caused by warning:
@@ -59,7 +64,7 @@ c_ombrothermic_diagram(data = weather_blue_grass_airport,
 #> (`geom_col()`).
 ```
 
-<img src="README_files/figure-gfm/example-1.png" width="70%" />
+<img src="README_files/figure-gfm/example-1.png" width="70%" style="display: block; margin: auto;" />
 
 ``` r
 

@@ -8,7 +8,9 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "70%"
+  out.width = "70%",
+  fig.align = "center",
+  warnings = FALSE
 )
 ```
 
@@ -16,8 +18,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-
-
+[![CRAN status](https://www.r-pkg.org/badges/version/weatheR)](https://CRAN.R-project.org/package=weatheR)
+[![R-CMD-check](https://github.com/vasseurbenoit/weatheR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/vasseurbenoit/weatheR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of weatheR is to provide functions that help analyzing and visualizing
@@ -41,13 +43,14 @@ devtools::install_github("vasseurbenoit/weatheR")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
+# Library
 library(weatheR)
 
 # Climate
 c_ombrothermic_diagram(data = weather_blue_grass_airport,
-                                 year_start = 1991,
-                                 year_end = 2020,
-                                 source = "Blue Grass Airport (Lexington)")
+                       year_start = 1991,
+                       year_end = 2020,
+                       source = "Blue Grass Airport (Lexington)")
 
 # ETP
 e_evapotranspiration_fao56(altitude = 30,
