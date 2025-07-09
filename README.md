@@ -36,41 +36,6 @@ This is a basic example which shows you how to solve a common problem:
 # Library
 library(weatheR)
 
-# Climate
-c_ombrothermic_diagram(data = weather_blue_grass_airport,
-                       year_start = 1991,
-                       year_end = 2020,
-                       source = "Blue Grass Airport (Lexington)")
-#> $table
-#> # A tibble: 48 × 4
-#>    month  rain variable                        value
-#>    <ord> <dbl> <chr>                           <dbl>
-#>  1 Jan    86.6 "Average air\ntemperature (°C)"   0.7
-#>  2 Jan    86.6 "Minimum air\ntemperature (°C)"  -3.8
-#>  3 Jan    86.6 "Maximum air\ntemperature (°C)"  10.6
-#>  4 Jan    86.6 "Number of\nfreezing day"         6.7
-#>  5 Feb    91.2 "Average air\ntemperature (°C)"   2.9
-#>  6 Feb    91.2 "Minimum air\ntemperature (°C)"  -2.1
-#>  7 Feb    91.2 "Maximum air\ntemperature (°C)"  14.1
-#>  8 Feb    91.2 "Number of\nfreezing day"         3.9
-#>  9 Mar   113.  "Average air\ntemperature (°C)"   7.4
-#> 10 Mar   113.  "Minimum air\ntemperature (°C)"   2  
-#> # ℹ 38 more rows
-#> 
-#> $diagram
-```
-
-<div class="figure" style="text-align: center">
-
-<img src="man/figures/example-1.png" alt="Ombrothermic diagram of Lexington Blue Grass Airport." width="80%" />
-<p class="caption">
-Ombrothermic diagram of Lexington Blue Grass Airport.
-</p>
-
-</div>
-
-``` r
-
 # ETP
 e_evapotranspiration_fao56(altitude = 30,
                            R_inc = 5,
@@ -99,4 +64,36 @@ t_growing_degree_days(T_air_avg = 15,
 #> 
 #> $growing_degree_days
 #> [1] 7.5
+
+# Climate
+c_ombrothermic_diagram(data = weather_blue_grass_airport,
+                       year_start = 1991,
+                       year_end = 2020,
+                       source = "Blue Grass Airport (Lexington)")
+#> $table
+#> # A tibble: 48 × 4
+#>    month  rain variable                        value
+#>    <ord> <dbl> <chr>                           <dbl>
+#>  1 Jan    86.6 "Average air\ntemperature (°C)"   0.7
+#>  2 Jan    86.6 "Minimum air\ntemperature (°C)"  -3.8
+#>  3 Jan    86.6 "Maximum air\ntemperature (°C)"  10.6
+#>  4 Jan    86.6 "Number of\nfreezing day"         6.7
+#>  5 Feb    91.2 "Average air\ntemperature (°C)"   2.9
+#>  6 Feb    91.2 "Minimum air\ntemperature (°C)"  -2.1
+#>  7 Feb    91.2 "Maximum air\ntemperature (°C)"  14.1
+#>  8 Feb    91.2 "Number of\nfreezing day"         3.9
+#>  9 Mar   113.  "Average air\ntemperature (°C)"   7.4
+#> 10 Mar   113.  "Minimum air\ntemperature (°C)"   2  
+#> # ℹ 38 more rows
+#> 
+#> $diagram
 ```
+
+<div class="figure" style="text-align: center">
+
+<img src="man/figures/example-1.png" alt="Ombrothermic diagram of Lexington Blue Grass Airport." width="100%" />
+<p class="caption">
+Ombrothermic diagram of Lexington Blue Grass Airport.
+</p>
+
+</div>
