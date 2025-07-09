@@ -1,0 +1,61 @@
+---
+title: "Climate"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Climate}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(weatheR)
+library(tidyverse)
+library(ggsci)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  dpi = 600,
+  fig.width = 7,
+  fig.height = 4,
+  fig.align = "center",
+  out.width = "100%"
+)
+```
+
+\newpage
+
+# Ombrothermic diagram
+
+```{r}
+c_ombrothermic_diagram(
+  data = weather_blue_grass_airport,
+  year_start = 1991,
+  year_end = 2020,
+  source = "Blue Grass Airport (Lexington)"
+)
+```
+
+
+\newpage
+
+# Weather anomaly
+
+```{r}
+c_weather_anomaly(
+  data = weather_blue_grass_airport,
+  year_start = 1990,
+  year_end = 2019,
+  months = c(9,10,11,12,1,2,3),
+  day_start = 1,
+  day_end = 31,
+  years = c(2020,2021,2022,2023),
+  source = "Blue Grass Airport (Lexington)"
+)
+```
+
+
+# References

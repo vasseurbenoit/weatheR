@@ -8,12 +8,12 @@ c_weather_anomaly(
   data,
   year_start,
   year_end,
-  month_start,
-  month_end,
+  months,
   day_start,
   day_end,
   years,
-  source
+  source,
+  plot_type = 1
 )
 }
 \arguments{
@@ -21,13 +21,11 @@ c_weather_anomaly(
 \code{T_air_min} respectively the date of the day, the rain (mm) and the maximum
 and minimum temperature (°C).}
 
-\item{year_start}{Start year to begin the statical analysis.}
+\item{year_start}{Starting year to begin the statical analysis.}
 
 \item{year_end}{End year to finish the statical analysis.}
 
-\item{month_start}{Start month to begin the statical analysis.}
-
-\item{month_end}{End month to finish the statical analysis.}
+\item{months}{Vector with the month to take into account.}
 
 \item{day_start}{Start day to begin the statical analysis.}
 
@@ -38,10 +36,14 @@ Selected years must be out of the range of years selected between \code{year_sta
 and \code{year_end}.}
 
 \item{source}{Source of the data.}
+
+\item{plot_type}{1 rain in ratio to mean, 2 rain in absolute value}
 }
 \value{
-List with \code{table} and \code{diagram}. The table is used to build the
-ombrothermic plot.
+List with \code{data_thirthy_years_avg}, \code{data_selected_years} and
+\code{plot_selected_years}, the df with the thirthy years average temperature and
+rainfall, the df with the average temperature and rainfall of the selected
+years and the plot of the selected years.
 }
 \description{
 To be correct, 30 years must be selected for the statistical
@@ -51,8 +53,7 @@ analysis.
 output <- c_weather_anomaly(data = weather_blue_grass_airport,
                             year_start = 1990,
                             year_end = 2019,
-                            month_start = 5,
-                            month_end = 9,
+                            months = c(9,10,11,12,1,2,3),
                             day_start = 1,
                             day_end = 31,
                             years = c(2020,2021,2022,2023),

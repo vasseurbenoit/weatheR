@@ -5,7 +5,7 @@
 \alias{weather_blue_grass_airport}
 \title{weather_blue_grass_airport}
 \format{
-A data frame with 45290 rows and 9 variables:
+A data frame with 45656 rows and 9 variables:
 \describe{
 \item{ date }{  Date }
 \item{ rain }{  numeric }

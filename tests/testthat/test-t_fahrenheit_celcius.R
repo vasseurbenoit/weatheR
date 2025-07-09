@@ -10,4 +10,8 @@ test_that("conversion are correct", {
                    digits = 0),
     expected = 72)
 
+  expect_error(
+    object = t_fahrenheit_celcius()
+  )
+
 })

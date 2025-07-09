@@ -1,0 +1,245 @@
+---
+title: "Temperature"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Temperature}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(weatheR)
+library(tidyverse)
+library(ggsci)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  dpi = 600,
+  fig.width = 7,
+  fig.height = 4,
+  fig.align = "center",
+  out.width = "100%"
+)
+```
+
+\newpage
+# Growing degree-days
+
+Growing degree day can be calculated in several ways:
+
+- **Method A and B**: Linear
+$$GDD = \frac{(T_{max} + T_{min})}{2} - T_{base}$$
+
+
+Methods A and B differ in their way of handling daily minimum and maximum air 
+temperatures. In **method A**, the comparison to base temperature occurs
+after calculating the average temperature whereas in **method B**, the 
+comparison to base temperature is made before calculating average air 
+temperature  using the following rules [@mcmaster_growing_1997]:
+
+- if $T_{max} < T_{base}$ then, $T_{max} = T_{base}$ 
+- if $T_{min} < T_{base}$ then, $T_{min} = T_{base}$
+
+**That's why, it's important to specify the method used to calculate GDD.**
+
+
+- **Method C**: Triangle 
+
+- **Method D**: Trapezoidal
+
+```{r rate-of-development, fig.cap="Rate of develoment as function of temperature for different growing degree-days (GDD) methods."}
+# Cardinal temperatures
+T_base <- 5
+T_opt <- 15
+T_opt_1 <- 10
+T_opt_2 <- 20
+T_max <- 25
+
+# Calculation
+rate_of_development <- 
+  tibble(.rows = 31) %>% 
+  mutate(
+    T_air_min = seq(0, 30, 1),
+    T_air_max = seq(0, 30, 1),
+    T_air_avg = seq(0, 30, 1),
+    # Method A
+    method_a =
+      t_growing_degree_days(
+        T_air_avg = T_air_avg,
+        T_base = T_base,
+        method = "A"
+      )[["rate_of_development"]],
+    # Method B
+    method_b =
+      t_growing_degree_days(
+        T_air_min = T_air_min,
+        T_air_max = T_air_max,
+        T_base = T_base,
+        method = "B"
+      )[["rate_of_development"]],
+    # Method C
+    method_c =
+      t_growing_degree_days(
+        T_air_avg = T_air_avg,
+        T_base = T_base,
+        T_opt = T_opt,
+        T_max = T_max,
+        method = "C"
+      )[["rate_of_development"]],
+    # Method D
+    method_d = 
+      t_growing_degree_days(
+        T_air_avg = T_air_avg,
+        T_base = T_base,
+        T_opt_1 = T_opt_1,
+        T_opt_2 = T_opt_2,
+        T_max = T_max,
+        method = "D"
+      )[["rate_of_development"]]
+  ) %>% 
+  pivot_longer(cols = c(
+    "method_a",
+    "method_b",
+    "method_c",
+    "method_d"),
+    names_to = "variable",
+    values_to = "value") %>% 
+  mutate(
+    variable = str_replace_all(string = variable,
+                               pattern = "method_a",
+                               replacement = "Linear - Small grains"),
+    variable = str_replace_all(string = variable,
+                               pattern = "method_b",
+                               replacement = "Linear - Corn"),
+    variable = str_replace_all(string = variable,
+                               pattern = "method_c",
+                               replacement = "Triangle"),
+    variable = str_replace_all(string = variable,
+                               pattern = "method_d",
+                               replacement = "Trapezoidal")
+  ) 
+
+# Plot
+ggplot(rate_of_development,
+       aes(x = T_air_avg,
+           y = value,
+           color = variable)) +
+  geom_point(size = 3) +
+  geom_line(linewidth = 1.2) +
+  theme_bw() +
+  theme(text = element_text(size = 14),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "right",
+        legend.box = "vertical") +
+  xlab("Average air temperature (°C)") +
+  ylab("Rate of development (1/d)") +
+  labs(color = "GDD methods")
+```
+
+
+```{r growing-degree-days, fig.cap="Cumulative growing degree-days (GDD) calculated with different methods."}
+# Cardinal temperatures
+T_base <- 5
+T_opt <- 15
+T_opt_1 <- 10
+T_opt_2 <- 20
+T_max <- 25
+
+# Calculation
+growing_degree_days <- 
+  weather_blue_grass_airport %>% 
+  filter(date > "2022-10-01",
+         date < "2023-04-20") %>% 
+  mutate(
+    T_air_avg = (T_air_max + T_air_min)/2,
+    # Method A
+    method_a =
+      cumsum(
+        t_growing_degree_days(
+          T_air_avg = T_air_avg,
+          T_base = T_base,
+          method = "A"
+        )[["growing_degree_days"]]
+      ),
+    # Method B
+    method_b = 
+      cumsum(
+        t_growing_degree_days(
+          T_air_min = T_air_min,
+          T_air_max = T_air_max,
+          T_base = T_base,
+          method = "B"
+        )[["growing_degree_days"]]
+      ),
+    # Method C
+    method_c =
+      cumsum(
+        t_growing_degree_days(
+          T_air_avg = T_air_avg,
+          T_base = T_base,
+          T_opt = T_opt,
+          T_max = T_max,
+          method = "C"
+        )[["growing_degree_days"]]
+      ),
+    # Method D
+    method_d = 
+      cumsum(
+        t_growing_degree_days(
+          T_air_avg = T_air_avg,
+          T_base = T_base,
+          T_opt_1 = T_opt_1,
+          T_opt_2 = T_opt_2,
+          T_max = T_max,
+          method = "D"
+        )[["growing_degree_days"]]
+      )
+  ) %>% 
+  pivot_longer(cols = c("method_a",
+                        "method_b",
+                        "method_c",
+                        "method_d"),
+               names_to = "variable",
+               values_to = "value") %>% 
+  mutate(
+    variable = str_replace_all(string = variable,
+                               pattern = "method_a",
+                               replacement = "Linear - Small grains"),
+    variable = str_replace_all(string = variable,
+                               pattern = "method_b",
+                               replacement = "Linear - Corn"),
+    variable = str_replace_all(string = variable,
+                               pattern = "method_c",
+                               replacement = "Triangle"),
+    variable = str_replace_all(string = variable,
+                               pattern = "method_d",
+                               replacement = "Trapezoidal")
+  )
+
+# Plot
+ggplot(growing_degree_days,
+       aes(x = date,
+           y = value,
+           color = variable)) +
+  geom_point() +
+  theme_bw() +
+  theme(text = element_text(size = 14),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x = element_text(face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "right",
+        legend.box = "vertical") +
+  xlab("Average air temperature (°C)") +
+  ylab("Growing degree days (°C/d)") +
+  labs(color = "GDD methods")
+```
+
+# References

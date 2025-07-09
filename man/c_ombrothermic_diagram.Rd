@@ -22,14 +22,14 @@ List with \code{table} and \code{diagram}. The table is used to build the
 ombrothermic plot.
 }
 \description{
-Plot a ombrothermic diagram for a set of weather data.
+Plot ombrothermic diagram for a set of weather data.
 
 On the y scale, one temperature unit equals two rain unit. To
 be correct, 30 years must be selected for the statistical analysis.
 }
 \examples{
 output <- c_ombrothermic_diagram(data = weather_blue_grass_airport,
-                                 year_start = 1990,
-                                 year_end = 2019,
+                                 year_start = 1991,
+                                 year_end = 2020,
                                  source = "Blue Grass Airport (Lexington)")
 }

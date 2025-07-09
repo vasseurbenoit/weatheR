@@ -1,0 +1,41 @@
+---
+title: "Evapotranspiration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Evapotranspiration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(weatheR)
+library(tidyverse)
+library(ggsci)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  dpi = 600,
+  fig.width = 7,
+  fig.height = 4,
+  fig.align = "center",
+  out.width = "100%"
+)
+```
+
+\newpage
+
+# FAO56
+
+
+\newpage
+
+# Spitters
+
+
+\newpage
+
+# References

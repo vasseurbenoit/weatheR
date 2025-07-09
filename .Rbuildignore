@@ -2,3 +2,10 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^dev$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^LICENSE\.md$
+^README\.Rmd$
+^codecov\.yml$
+^\.github$

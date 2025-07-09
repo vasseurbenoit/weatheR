@@ -1,0 +1,34 @@
+---
+title: "dev_history"
+date: "2023-07-13"
+output: html_document
+---
+
+```{r tips & tricks}
+# set and try pkgdown documentation website (run in console)
+## Only ONE run
+usethis::use_pkgdown() 
+## Copy/Paste in the console to build the site
+pkgdown::build_site(override = list(destination = "docs/"),
+                    examples = TRUE,
+                    lazy = TRUE) 
+
+# Package documentation (man/)
+attachment::att_amend_desc()
+
+# Checking the package
+## without running the vignettes
+devtools::check(vignettes = FALSE)
+## with running the vignettes
+devtools::check()
+
+# Build the package from the console
+devtools::build(vignettes = FALSE)
+
+# Checking if the code is correctly tested
+covr::report(file = "inst/report/cgesR-report.html")
+
+# Open the R.environ file
+usethis::edit_r_environ()
+```
+

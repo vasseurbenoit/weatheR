@@ -1,6 +1,6 @@
 #' c_ombrothermic_diagram
 #'
-#' @description Plot a ombrothermic diagram for a set of weather data.
+#' @description Plot ombrothermic diagram for a set of weather data.
 #' @description On the y scale, one temperature unit equals two rain unit. To
 #' be correct, 30 years must be selected for the statistical analysis.
 #'
@@ -16,13 +16,15 @@
 #'
 #' @import ggplot2
 #' @import lubridate
-#' @importFrom dplyr mutate summarise across group_by filter
+#' @importFrom dplyr mutate summarise across group_by filter rename
+#' @importFrom forcats fct_relevel
+#' @importFrom tidyr pivot_longer
 #' @export
 #'
 #' @examples
 #' output <- c_ombrothermic_diagram(data = weather_blue_grass_airport,
-#'                                  year_start = 1990,
-#'                                  year_end = 2019,
+#'                                  year_start = 1991,
+#'                                  year_end = 2020,
 #'                                  source = "Blue Grass Airport (Lexington)")
 c_ombrothermic_diagram <- function(data,
                                    year_start,
@@ -62,59 +64,78 @@ c_ombrothermic_diagram <- function(data,
                     "T_air_avg",
                     "freezing_day"),
                   ~ round(x = .,
-                          digits = 1)))
+                          digits = 1))) %>%
+    rename("Average air\ntemperature (°C)" = "T_air_avg",
+           "Minimum air\ntemperature (°C)" = "T_air_min",
+           "Maximum air\ntemperature (°C)" = "T_air_max",
+           "Number of\nfreezing day" = "freezing_day") %>%
+    pivot_longer(cols = c("Average air\ntemperature (°C)",
+                          "Minimum air\ntemperature (°C)",
+                          "Maximum air\ntemperature (°C)",
+                          "Number of\nfreezing day"),
+                 names_to = "variable",
+                 values_to = "value")
 
 
   # Ploting ----
   diagram <-
-    ggplot(data = table) +
+    ggplot(
+      data = table %>%
+        mutate(month = fct_relevel(month,
+                                   c("Oct",
+                                     "Nov",
+                                     "Dec",
+                                     "Jan",
+                                     "Feb",
+                                     "Mar",
+                                     "Apr",
+                                     "May",
+                                     "Jun",
+                                     "Jul",
+                                     "Aug",
+                                     "Sep")),
+               variable = fct_relevel(variable,
+                                      c("Maximum air\ntemperature (°C)",
+                                        "Average air\ntemperature (°C)",
+                                        "Minimum air\ntemperature (°C)",
+                                        "Number of\nfreezing day")))
+    ) +
     geom_col(aes(x = month, y = rain), fill = "lightblue") +
     geom_point(aes(x = month,
-                   y = T_air_max * parameters[["y_scale_ombrothermic_diagram"]]),
-               color = "darkred",
+                   y = value *
+                     parameters[["y_scale_ombrothermic_diagram"]],
+                   color = variable),
                size = 3) +
     geom_line(aes(x = month,
-                  y = T_air_max * parameters[["y_scale_ombrothermic_diagram"]],
-                  group = 1),
-              color = "darkred",
-              size = 0.5) +
-    geom_point(aes(x = month,
-                   y = T_air_min * parameters[["y_scale_ombrothermic_diagram"]]),
-               color = "darkgreen",
-               size = 3) +
-    geom_line(aes(x = month,
-                  y = T_air_min * parameters[["y_scale_ombrothermic_diagram"]],
-                  group = 1),
-              color = "darkgreen",
-              size = 0.5) +
-    geom_point(aes(x = month,
-                   y = T_air_avg * parameters[["y_scale_ombrothermic_diagram"]]),
-               color = "darkblue",
-               size = 3) +
-    geom_line(aes(x = month,
-                  y = T_air_avg * parameters[["y_scale_ombrothermic_diagram"]],
-                  group = 1),
-              color =  "darkblue",
-              size = 0.5) +
-    geom_point(aes(x = month,
-                   y = freezing_day * parameters[["y_scale_ombrothermic_diagram"]]),
-               color = "snow",
-               size = 3) +
-    geom_line(aes(x = month,
-                  y = freezing_day * parameters[["y_scale_ombrothermic_diagram"]],
-                  group = 1),
-              color = "snow",
-              size = 0.5) +
+                   y = value *
+                    parameters[["y_scale_ombrothermic_diagram"]],
+                   group = variable,
+                  color = variable)) +
     labs(x = "Month",
-         y = "Rain (mm)") +
+         y = "Monthly average precipitation (mm)") +
     scale_y_continuous(
       limits = c(
-        -(min(table$T_air_min) + 5),
-        (max(table$rain) + 50)),
+        ifelse(min(table$value) < 0,
+               (min(table$value) - 5),
+               (min(table$value) + 5)),
+        (max(table$rain) + 10)),
       sec.axis = sec_axis(trans = ~.*(1/parameters[["y_scale_ombrothermic_diagram"]]),
-                          name = "AVerage air temperature (°C)")) +
+                          name = "Monthly average air temperature (°C)")) +
+    scale_color_manual(values = c("red", "black", "blue", "darkgrey")) +
+    labs(color = "") +
     theme_bw() +
-    labs(caption = {{source}})
+    theme(text = element_text(size = 14),
+          axis.title =  element_text(face = "bold"),
+          legend.title = element_text(face = "bold"),
+          legend.position = "right",
+          legend.box = "vertical") +
+    theme(legend.position = "bottom") +
+    labs(caption = glue::glue({{source}},
+                              ". Average from ",
+                              {{year_start}},
+                              " to ",
+                              {{year_end}}
+    ))
 
 
   # Output ----
