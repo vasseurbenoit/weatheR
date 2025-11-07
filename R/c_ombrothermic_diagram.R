@@ -16,10 +16,10 @@
 #'
 #' @import ggplot2
 #' @import lubridate
-#' @importFrom dplyr mutate summarise across group_by filter rename
+#' @importFrom dplyr mutate summarise across group_by filter rename case_when
 #' @importFrom tidyr pivot_longer
 #' @importFrom stringi stri_c
-#' @importFrom stringr str_replace_all
+#' @importFrom stringr str_replace_all str_to_title
 #' @export
 #'
 #' @examples
@@ -37,8 +37,22 @@ c_ombrothermic_diagram <- function(data,
     data %>%
     mutate(year = year(date),
            month = month(date,
-                         label = TRUE,
+                         label = FALSE,
                          abbr = TRUE),
+           month = case_when(
+             month == 1 ~ "Jan",
+             month == 2 ~ "Feb",
+             month == 3 ~ "Mar",
+             month == 4 ~ "Apr",
+             month == 5 ~ "May",
+             month == 6 ~ "Jun",
+             month == 7 ~ "Jul",
+             month == 8 ~ "Aug",
+             month == 9 ~ "Sep",
+             month == 10 ~ "Oct",
+             month == 11 ~ "Nov",
+             month == 12 ~ "Dec"
+           ),
            day = day(date),
            T_air_avg = (T_air_max + T_air_min)/2,
            freezing_day = ifelse(T_air_max < 0,

@@ -74,17 +74,17 @@ c_ombrothermic_diagram(data = weather_blue_grass_airport,
 #> $table
 #> # A tibble: 48 × 4
 #>    month  rain variable                        value
-#>    <ord> <dbl> <chr>                           <dbl>
-#>  1 Jan    86.6 "Average air\ntemperature (°C)"   0.7
-#>  2 Jan    86.6 "Minimum air\ntemperature (°C)"  -3.8
-#>  3 Jan    86.6 "Maximum air\ntemperature (°C)"  10.6
-#>  4 Jan    86.6 "Number of\nfreezing day"         6.7
-#>  5 Feb    91.2 "Average air\ntemperature (°C)"   2.9
-#>  6 Feb    91.2 "Minimum air\ntemperature (°C)"  -2.1
-#>  7 Feb    91.2 "Maximum air\ntemperature (°C)"  14.1
-#>  8 Feb    91.2 "Number of\nfreezing day"         3.9
-#>  9 Mar   113.  "Average air\ntemperature (°C)"   7.4
-#> 10 Mar   113.  "Minimum air\ntemperature (°C)"   2  
+#>    <chr> <dbl> <chr>                           <dbl>
+#>  1 Apr   112.  "Average air\ntemperature (°C)"  13.4
+#>  2 Apr   112.  "Minimum air\ntemperature (°C)"   7.4
+#>  3 Apr   112.  "Maximum air\ntemperature (°C)"  22.6
+#>  4 Apr   112.  "Number of\nfreezing day"         0  
+#>  5 Aug    94.2 "Average air\ntemperature (°C)"  24.2
+#>  6 Aug    94.2 "Minimum air\ntemperature (°C)"  18.5
+#>  7 Aug    94.2 "Maximum air\ntemperature (°C)"  33.3
+#>  8 Aug    94.2 "Number of\nfreezing day"         0  
+#>  9 Dec   108.  "Average air\ntemperature (°C)"   3.1
+#> 10 Dec   108.  "Minimum air\ntemperature (°C)"  -1.3
 #> # ℹ 38 more rows
 #> 
 #> $diagram
@@ -94,6 +94,7 @@ c_ombrothermic_diagram(data = weather_blue_grass_airport,
 
 <img src="man/figures/example-1.png" alt="Ombrothermic diagram of Lexington Blue Grass Airport." width="100%" />
 <p class="caption">
+
 Ombrothermic diagram of Lexington Blue Grass Airport.
 </p>
 
