@@ -94,6 +94,8 @@ Ombrothermic diagram of Lexington Blue Grass Airport.
   : cover_crop_cardinal_temperatures
 - [`e_evapotranspiration_fao56()`](https://vasseurbenoit.github.io/weatheR/reference/e_evapotranspiration_fao56.md)
   : Evapotranspiration de reference
+- [`nasapower_radiation_spindletop`](https://vasseurbenoit.github.io/weatheR/reference/nasapower_radiation_spindletop.md)
+  : nasapower_radiation_spindletop
 - [`parameters`](https://vasseurbenoit.github.io/weatheR/reference/parameters.md)
   : parameters
 - [`r_radiation_inc_fao56()`](https://vasseurbenoit.github.io/weatheR/reference/r_radiation_inc_fao56.md)
