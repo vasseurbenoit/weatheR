@@ -36,10 +36,14 @@ weather_blue_grass_airport <- read.csv(
                    digits = 1))
   ) %>%
   select(date,
+         year,
+         month,
+         day,
          rain,
          snow,
          T_air_max,
-         T_air_min)
+         T_air_min,
+         T_air_avg)
 
 ## NASAPOWER ----
 nasapower_radiation_spindletop <- read.csv(
