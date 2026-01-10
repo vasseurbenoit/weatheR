@@ -3,6 +3,7 @@ library(tidyverse)
 library(weatheR)
 
 # data ----
+## NOAA ----
 weather_blue_grass_airport <- read.csv(
   file = system.file(
     "weatherdata",
@@ -40,10 +41,29 @@ weather_blue_grass_airport <- read.csv(
          T_air_max,
          T_air_min)
 
+## NASAPOWER ----
+nasapower_radiation_spindletop <- read.csv(
+  file = system.file(
+    "nasapower",
+    "nasapower_radiation_spindletop_2018_2024.csv",
+    package = "weatheR"
+  )
+) %>%
+  rename("date" = "DATE",
+         "radiation" = "ALLSKY_SFC_PAR_TOT") %>%
+  mutate(date = as.Date(date,
+                        format = "%d/%m/%Y"),
+         radiation = as.numeric(radiation)) %>%
+  select(date,
+         radiation)
+
 # Saving ----
 usethis::use_data(weather_blue_grass_airport,
+                  nasapower_radiation_spindletop,
                   overwrite = TRUE)
 checkhelper::use_data_doc(name = "weather_blue_grass_airport",
                           description = "Observations of the blue grass airport weather station")
+checkhelper::use_data_doc(name = "nasapower_radiation_spindletop",
+                          description = "Observations of all sky solar radiation (PAR) from NASA POWER obtained at the coordiantes of the Landscape Nitrogen Position fields.")
 attachment::att_amend_desc()
 

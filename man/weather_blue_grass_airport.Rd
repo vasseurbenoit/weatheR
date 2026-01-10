@@ -5,17 +5,13 @@
 \alias{weather_blue_grass_airport}
 \title{weather_blue_grass_airport}
 \format{
-A data frame with 45656 rows and 9 variables:
+A data frame with 12419 rows and 5 variables:
 \describe{
 \item{ date }{  Date }
 \item{ rain }{  numeric }
 \item{ snow }{  numeric }
 \item{ T_air_max }{  numeric }
 \item{ T_air_min }{  numeric }
-\item{ T_air_avg }{  numeric }
-\item{ year }{  numeric }
-\item{ month }{  numeric }
-\item{ day }{  integer }
 }
 }
 \source{
