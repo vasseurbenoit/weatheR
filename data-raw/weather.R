@@ -54,7 +54,7 @@ nasapower_radiation_spindletop <- read.csv(
   )
 ) %>%
   rename("date" = "DATE",
-         "radiation" = "ALLSKY_SFC_PAR_TOT") %>%
+         "radiation" = "ALLSKY_SFC_SW_DWN") %>%
   mutate(date = as.Date(date,
                         format = "%d/%m/%Y"),
          radiation = as.numeric(radiation)) %>%
